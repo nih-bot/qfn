@@ -23,8 +23,8 @@ COPY --from=frontend-build /app/src/main/resources/static/ ./src/main/resources/
 # gradlew 실행 권한 부여
 RUN chmod +x ./gradlew
 
-# Gradle 빌드 (시스템 gradle 사용)
-RUN gradle build -x test --no-daemon
+# Gradle 빌드 (시스템 gradle 사용, 프론트엔드 빌드 제외)
+RUN gradle build -x test -x buildFrontend --no-daemon
 
 # 실행 환경
 FROM eclipse-temurin:21-jdk-jammy
