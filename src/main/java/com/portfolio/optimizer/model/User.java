@@ -11,7 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")  // PostgreSQL에서 'user'는 예약어이므로 'users'로 변경
 @Data
 @Builder
 @NoArgsConstructor
@@ -36,12 +36,12 @@ public class User {
     
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('USER', 'ADMIN') DEFAULT 'USER'")
+    @Column(length = 20)  // PostgreSQL 호환을 위해 단순 VARCHAR로 변경
     private UserRole role = UserRole.USER;
     
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('ACTIVE', 'LOCKED', 'DELETED') DEFAULT 'ACTIVE'")
+    @Column(length = 20)  // PostgreSQL 호환을 위해 단순 VARCHAR로 변경
     private UserStatus status = UserStatus.ACTIVE;
     
     @CreationTimestamp
