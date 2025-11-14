@@ -49,8 +49,11 @@ COPY src/main/python/ ./src/main/python/
 EXPOSE 8080
 
 # 환경변수 설정
-ENV SPRING_PROFILES_ACTIVE=azure
+ENV SPRING_PROFILES_ACTIVE=render
 ENV PYTHON_EXECUTABLE=python3
 
+# Render 환경 대응
+ENV JAVA_OPTS="-Xmx400m -Xms200m"
+
 # 애플리케이션 실행
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
