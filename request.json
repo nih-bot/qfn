@@ -1,0 +1,18 @@
+{
+  "sessionId": "api_test_session",
+  "stocks": [
+    { "symbol": "005380.KS", "name": "현대차", "quantity": 12, "purchasePrice": 188500, "risk": 6 },
+    { "symbol": "000660.KS", "name": "SK하이닉스", "quantity": 15, "purchasePrice": 182300, "risk": 7 },
+    { "symbol": "005930.KS", "name": "삼성전자", "quantity": 30, "purchasePrice": 78600, "risk": 5 },
+    { "symbol": "TSLA", "name": "테슬라", "quantity": 5, "purchasePrice": 245.5, "risk": 8 },
+    { "symbol": "NVDA", "name": "엔비디아", "quantity": 4, "purchasePrice": 529.6, "risk": 8 },
+    { "symbol": "AAPL", "name": "애플", "quantity": 8, "purchasePrice": 212.5, "risk": 4 }
+  ],
+  "totalInvestment": null,
+  "targetReturn": 12.0,
+  "riskLevel": 5,
+  "dataPeriod": "1년",
+  "optimizationMethod": "HYBRID",
+  "useRealData": true,
+  "constraints": { "maxSingleWeight": 0.5, "minDiversificationCount": 3 }
+}

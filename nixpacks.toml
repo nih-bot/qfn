@@ -1,0 +1,16 @@
+# Nixpacks 설정 (Railway용)
+providers = ["java", "node"]
+
+[phases.setup]
+nixPkgs = ["nodejs", "python3", "python3Packages.pip"]
+
+[phases.build]
+cmds = [
+  "cd frontend && npm install && npm run build",
+  "mkdir -p src/main/resources/static && cp -r frontend/dist/* src/main/resources/static/",
+  "./gradlew build --no-daemon",
+  "pip install yfinance pandas numpy requests"
+]
+
+[phases.start]
+cmd = "java -Dserver.port=$PORT -Dspring.profiles.active=railway -jar build/libs/qfn-portfolio-optimizer.jar"

@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: qfn-portfolio-optimizer
+    env: java
+    buildCommand: "./render-build.sh"
+    startCommand: "./render-start.sh"
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JAVA_TOOL_OPTIONS
+        value: "-Xmx512m"
+    healthCheckPath: "/actuator/health"
+
+databases:
+  - name: qfn-postgres
+    databaseName: qfn
+    user: qfnuser
+    plan: free

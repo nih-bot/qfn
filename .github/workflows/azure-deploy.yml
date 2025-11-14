@@ -1,0 +1,79 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  AZURE_WEBAPP_NAME: qfn-portfolio-app
+  JAVA_VERSION: '21'
+  NODE_VERSION: '18'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+
+    - name: Set up Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yfinance pandas numpy requests
+
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm install
+        npm run build
+        
+    - name: Copy frontend build to static resources
+      run: |
+        mkdir -p src/main/resources/static
+        cp -r frontend/dist/* src/main/resources/static/
+
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew build --no-daemon
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy to Azure App Service
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        slot-name: 'production'
+        package: build/libs/*.jar
+
+    - name: Set environment variables
+      run: |
+        az webapp config appsettings set \
+          --name ${{ env.AZURE_WEBAPP_NAME }} \
+          --resource-group qfn-rg \
+          --settings \
+            SPRING_PROFILES_ACTIVE=azure \
+            SPRING_DATASOURCE_URL="${{ secrets.DB_CONNECTION_STRING }}" \
+            SPRING_DATASOURCE_USERNAME="${{ secrets.DB_USERNAME }}" \
+            SPRING_DATASOURCE_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+            JWT_SECRET="${{ secrets.JWT_SECRET }}"

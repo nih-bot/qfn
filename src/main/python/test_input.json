@@ -1,0 +1,65 @@
+﻿{
+  "stocks": [
+    {
+      "symbol": "005380.KS",
+      "name": "Hyundai Motor",
+      "market": "DOMESTIC",
+      "quantity": 5.0,
+      "purchasePrice": 200000.0,
+      "currentPrice": 247000.0,
+      "investmentAmount": 1235000.0
+    },
+    {
+      "symbol": "TSLA",
+      "name": "Tesla",
+      "market": "FOREIGN",
+      "quantity": 1.0,
+      "purchasePrice": 250.0,
+      "currentPrice": 242.84,
+      "investmentAmount": 242.84
+    },
+    {
+      "symbol": "000660.KS",
+      "name": "SK Hynix",
+      "market": "DOMESTIC",
+      "quantity": 10.0,
+      "purchasePrice": 150000.0,
+      "currentPrice": 195800.0,
+      "investmentAmount": 1958000.0
+    },
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA",
+      "market": "FOREIGN",
+      "quantity": 3.0,
+      "purchasePrice": 500.0,
+      "currentPrice": 147.01,
+      "investmentAmount": 441.03
+    },
+    {
+      "symbol": "005930.KS",
+      "name": "Samsung Electronics",
+      "market": "DOMESTIC",
+      "quantity": 50.0,
+      "purchasePrice": 70000.0,
+      "currentPrice": 57600.0,
+      "investmentAmount": 2880000.0
+    },
+    {
+      "symbol": "AAPL",
+      "name": "Apple",
+      "market": "FOREIGN",
+      "quantity": 5.0,
+      "purchasePrice": 150.0,
+      "currentPrice": 224.23,
+      "investmentAmount": 1121.15
+    }
+  ],
+  "totalInvestment": 7438879.02,
+  "targetReturn": 12.0,
+  "targetRiskLevel": 5.0,
+  "dataPeriod": "1y",
+  "optimizationMethod": "HYBRID",
+  "useRealData": true,
+  "constraints": {}
+}
