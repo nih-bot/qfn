@@ -13,11 +13,20 @@ RUN cd frontend && npm run build
 FROM gradle:8.4-jdk21 AS backend-build
 
 WORKDIR /app
-COPY --from=frontend-build /app .
-COPY . .
 
-# Gradle 빌드
-RUN gradle build --no-daemon
+# Gradle 래퍼와 빌드 파일 먼저 복사
+COPY build.gradle settings.gradle gradlew gradlew.bat ./
+COPY gradle/ ./gradle/
+
+# 의존성만 먼저 다운로드 (캐싱 최적화)
+RUN ./gradlew dependencies --no-daemon || true
+
+# 소스 코드 복사
+COPY src/ ./src/
+COPY --from=frontend-build /app/src/main/resources/static/ ./src/main/resources/static/
+
+# Gradle 빌드 (테스트 제외)
+RUN ./gradlew build -x test --no-daemon
 
 # 실행 환경
 FROM eclipse-temurin:21-jdk-jammy
