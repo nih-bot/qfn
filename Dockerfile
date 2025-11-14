@@ -19,7 +19,7 @@ COPY --from=frontend-build /app/frontend/dist ./src/main/resources/static/
 RUN gradle build --no-daemon
 
 # 실행 환경
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jdk-jammy
 
 # Python 설치 (주식 데이터 처리용)
 RUN apt-get update && \
