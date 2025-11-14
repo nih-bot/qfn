@@ -62,3 +62,9 @@ Thumbs.db
 
 # Compiled
 *.class
+
+# Environment variables (보안상 중요 - GitHub에 업로드하면 안됨)
+.env
+.env.local
+.env.production
+.env.development
