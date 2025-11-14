@@ -18,6 +18,9 @@ WORKDIR /app
 COPY build.gradle settings.gradle gradlew gradlew.bat ./
 COPY gradle/ ./gradle/
 
+# gradlew 실행 권한 부여
+RUN chmod +x ./gradlew
+
 # 의존성만 먼저 다운로드 (캐싱 최적화)
 RUN ./gradlew dependencies --no-daemon || true
 
