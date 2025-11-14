@@ -2,18 +2,19 @@
 FROM node:18-alpine AS frontend-build
 
 # 프론트엔드 빌드
-WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm install
-COPY frontend/ ./
-RUN npm run build
+WORKDIR /app
+COPY frontend/package*.json ./frontend/
+RUN cd frontend && npm install
+COPY frontend/ ./frontend/
+COPY src/ ./src/
+RUN cd frontend && npm run build
 
 # Java 애플리케이션 빌드
 FROM gradle:8.4-jdk21 AS backend-build
 
 WORKDIR /app
+COPY --from=frontend-build /app .
 COPY . .
-COPY --from=frontend-build /app/frontend/dist ./src/main/resources/static/
 
 # Gradle 빌드
 RUN gradle build --no-daemon
