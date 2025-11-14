@@ -936,8 +936,8 @@ def optimize_with_qaoa(n, returns, covariance_matrix, risk_factor, constraints=N
         qaoa_weights = shares_to_weights(shares, prices)
         print(f"   Initial weights: {qaoa_weights}", file=sys.stderr)
         
-        # Phase 3: MPT refinement with diversification constraints
-        print("🔷 Phase 3: MPT refinement with diversification...", file=sys.stderr)
+        # Phase 3: MPT refinement with realistic constraints
+        print("🔷 Phase 3: MPT refinement with optimization...", file=sys.stderr)
         mpt_start = time.time()
         
         from scipy.optimize import minimize
@@ -949,10 +949,10 @@ def optimize_with_qaoa(n, returns, covariance_matrix, risk_factor, constraints=N
         
         constraints_opt = {'type': 'eq', 'fun': lambda w: np.sum(w) - 1}
         
-        # Force diversification: minimum 5% per stock, maximum 40% per stock
-        # This ensures all input stocks are used in the portfolio
-        min_weight_per_stock = 0.05  # 5% minimum
-        max_weight_per_stock = 0.40  # 40% maximum
+        # Realistic bounds: allow optimization to find optimal allocation
+        # Allow 0% to 80% per stock for proper optimization
+        min_weight_per_stock = 0.0   # Allow 0% (no forced allocation)
+        max_weight_per_stock = 0.8   # Maximum 80% per stock
         bounds = tuple((min_weight_per_stock, max_weight_per_stock) for _ in range(n))
         
         print(f"   Enforcing diversification: {min_weight_per_stock*100}%-{max_weight_per_stock*100}% per stock", file=sys.stderr)
