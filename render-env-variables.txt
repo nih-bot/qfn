@@ -1,0 +1,23 @@
+# Render 환경변수 설정용 (복사해서 Render에 붙여넣기)
+
+# 필수 환경변수들 - 아래 값들을 Render Environment Variables에 설정하세요
+
+DATABASE_URL=jdbc:postgresql://dpg-d4ba82buibrs739og64g-a/qfn_portfolio_db?user=qfn_portfolio_db_user&password=wEFB9fOEvVm83cxE4pFDuBWu0OdwD168
+
+JWT_SECRET=yourSecretKeyForJWTTokenGenerationMustBeLongerThan256Bits
+
+GEMINI_API_KEY=AIzaSyDXZbRMubuLd8LGu0qPQmP6BBf_kL1_wEU
+
+MAIL_USERNAME=donghyun1198@gmail.com
+
+MAIL_PASSWORD=ddwrlmxdgdgeegts
+
+CORS_ALLOWED_ORIGINS=https://*.onrender.com
+
+# ===========================================
+# 설정 방법:
+# 1. Render 웹 서비스 → Settings → Environment
+# 2. "Add Environment Variable" 클릭
+# 3. 위의 각 변수를 Key/Value로 추가
+# 4. Save Changes 클릭
+# ===========================================
